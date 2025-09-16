@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgres-demo
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: "https://github.com/max-kandzia/minikube-velero-demo"
+    targetRevision: HEAD
+    path: database/overlays/minikube
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: database
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
